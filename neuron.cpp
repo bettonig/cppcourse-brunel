@@ -133,7 +133,7 @@ void Neuron::Store_spike(int step, bool is_Inhib)
 {
 	int modulo = (step + delay) % (delay + 1);
 	if (is_Inhib) {
-		delay_buffer[modulo] -= 6;
+		delay_buffer[modulo] -= 5;
 		//std::cout<<"  inhib"<<std::endl;
 	} else {
 		delay_buffer[modulo] += 1;

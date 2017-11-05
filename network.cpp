@@ -81,7 +81,7 @@ void Network::ask_display() {
 void Network::rum_rum() 
 {		
 	
-	int lambda(4);
+	int lambda(2);
 	std::random_device rd_;
 	std::mt19937 generate(rd_());
 	std::poisson_distribution<> poisson_distribution(lambda);
@@ -97,7 +97,7 @@ void Network::rum_rum()
 //	Neurons_mem_pot.open("potentials.txt");
 	
 	std::ofstream Spikes;
-	Spikes.open("Spikes_plotB.txt");
+	Spikes.open("Spikes_plot.txt");
 	
 	bool is_Inhib(false);
 	Iext2 = Iext;
@@ -120,9 +120,9 @@ void Network::rum_rum()
 					}
 					neurons_[i].Send_spike(neurons_[neurons_targets[i][j]], (nb_step), is_Inhib);
 				}
-				if (nb_step > 5000 and nb_step < 7000) {
+				//if (nb_step > 5000 and nb_step < 7000) {
 					Spikes << nb_step << '\t' << i << std::endl;
-				}
+				//}
 			}
 			if (nb_step < start_step or nb_step > stop_step) 
 			{
