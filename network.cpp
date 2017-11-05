@@ -16,7 +16,7 @@ Network::Network ()
 		}
 	}
 /** This code enables us to iniate the matrix with a random number in each 
- * cases corresponding to a neuron number, so each neurons i will be 
+ * cases corresponding to a neuron number, so each neurons 'i' will be 
  * connected to randomly chosen neurons.
  */
 }																			
@@ -32,10 +32,10 @@ Network::Network ()
 void Network::ask_display() {
 
 	while (start_step <= 0 or start_step >= stop_time) {											
-		std::cout << "Please inserteth the beginnig step (>0 & <10000) :" << std::endl;			
+		std::cout << "Please inserteth the beginnig step (0 & <10000) :" << std::endl;			
 		std::cin >> start_step;
 		if (std::cin.fail() or start_step >= stop_time) {
-			std::cout << "I'm afraid i can't do that Dave!" << std::endl;
+			std::cout << "I'm sorry Dave, I'm afraid i can't do that......I think you know what the problem is!" << std::endl;
 			std::cin.clear();
 			std::cin.ignore(INT_MAX, '\n');
 		};
@@ -46,7 +46,7 @@ void Network::ask_display() {
 		std::cout << "Please inserteth the stopping step (>beginning step & <=10000) :" << std::endl;	
 		std::cin >> stop_step;
 		if (std::cin.fail() or stop_step < start_step or stop_step > stop_time) {
-			std::cout << "I'm afraid i can't do that Dave!" << std::endl;
+			std::cout << "I'm sorry Dave, I'm afraid i can't do that......I think you know what the problem is!" << std::endl;
 			std::cin.clear();
 			std::cin.ignore(INT_MAX, '\n');
 		};
@@ -57,7 +57,7 @@ void Network::ask_display() {
 		std::cout << "Please inserteth the current :" << std::endl;
 		std::cin >> Iext;
 		if (std::cin.fail()) {
-			std::cout << "I'm afraid i can't do that Dave!2" << std::endl;
+			std::cout << "I'm sorry Dave, I'm afraid i can't do that......I think you know what the problem is!" << std::endl;
 			std::cin.clear();
 			std::cin.ignore(INT_MAX, '\n');
 		};
@@ -81,7 +81,7 @@ void Network::ask_display() {
 void Network::rum_rum() 
 {		
 	
-	int lambda(2);
+	int lambda(4);
 	std::random_device rd_;
 	std::mt19937 generate(rd_());
 	std::poisson_distribution<> poisson_distribution(lambda);
@@ -97,7 +97,7 @@ void Network::rum_rum()
 //	Neurons_mem_pot.open("potentials.txt");
 	
 	std::ofstream Spikes;
-	Spikes.open("Spikes_plot.txt");
+	Spikes.open("Spikes_plotB.txt");
 	
 	bool is_Inhib(false);
 	Iext2 = Iext;
@@ -118,9 +118,11 @@ void Network::rum_rum()
 					{
 						is_Inhib = true;
 					}
-					neurons_[i].Send_spike(neurons_[neurons_targets[i][j]], (nb_step-1), is_Inhib);
+					neurons_[i].Send_spike(neurons_[neurons_targets[i][j]], (nb_step), is_Inhib);
 				}
+				if (nb_step > 5000 and nb_step < 7000) {
 					Spikes << nb_step << '\t' << i << std::endl;
+				}
 			}
 			if (nb_step < start_step or nb_step > stop_step) 
 			{
@@ -138,14 +140,6 @@ void Network::rum_rum()
 	
 //	Neurons_mem_pot.close();
 	Spikes.close();
-	
-/** 1st step : the current input is only active inside the chosen interval of time.
- * 				Outside, the current input is 0.
- * 
- * 2nd step : we check if the neuron i has spiked, if yes : send spike to every 
- * 													neurons it is connected to.
- * 
- * 3rd step : we update the neuron and write its potential in the .txt file
- * 
- * */
 }
+
+

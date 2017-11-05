@@ -44,7 +44,7 @@ class Neuron {
 		double Get_membrane_potential () const;
 		unsigned int Get_nb_spks () const;
 		int_vector Get_time_spks () const;
-		int Get_buffer(size_t place) const;
+		int Get_buffer (size_t place) const;
 		
 //----------------------------------------------------------------------		
 		
@@ -60,9 +60,19 @@ class Neuron {
 		bool Has_now_spiked (/*double dT*/);
 		
 		void Update_state (double Iext2, int poisson);					// dT = time interval (0.1)
-		void Send_spike(Neuron& neuron, int step, bool Is_inhib);
-		void Store_spike(int step, bool is_Inhib);
+		void Send_spike (Neuron& neuron, int step, bool Is_inhib);
+		void Store_spike (int step, bool is_Inhib);
 		
 };
+/**	
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * */
 
 #endif

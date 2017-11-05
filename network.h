@@ -31,7 +31,8 @@ class Network {
 	
 		static constexpr int exhit_conn = (nb_exhit/10); //1000					nb of connections to an excitatory neuron
 		static constexpr int inhib_conn = (nb_inhib/10); //250					nb of connections to an inhibitatory neuron
-		static constexpr int conn_tot = (exhit_conn + inhib_conn); //1250	
+		static constexpr int conn_tot = (exhit_conn + inhib_conn); //1250		nb of connections total
+	
 	
 	public:
 		
@@ -40,5 +41,49 @@ class Network {
 		void ask_display();
 		void rum_rum();
 };
-
+/* SCHEME :
+ * 	
+ * 			1 - - - - conn_tot
+ *		 1					|
+ *		 |					|
+ *		 |					|
+ *		 |					|
+ *		 k	A B C D E F	G	|
+ *		 |					|
+ *		 |					|
+ *		 |					|
+ * nb_neurons - - - - - - - /
+ * 
+ * */
+ 
+/**	FIRST : 
+ * 		This class will create and initiate our vector of neurons & our matrix of connections.
+ * 		(for scheme, see commentary in 'network.h')
+ * 
+ * 		In the vector of neurons, if the neuron is between 1 and 10'000 it is an excitatory neuron,
+ * 		if it is between 10'001 and 12'500 it is an inhibitory neuron.
+ * 
+ * 		For each neurons 'k', A to G are random numbers (between 1 and nb_neurons) that correspond to
+ * 		the neurons to which 'k' is connected. 
+ * 		Actually they correspond to the places of the neurons in the vector of neurons.
+ * 
+ * 		The nb of connections 'k' has is 1/10 of the total nb of neurons.
+ * 
+ * 
+ * SECOND :
+ * 		The simulation will run from step 0 to step 10'000. But we can choose the interval during which
+ * 		the brain is active in some sort (e.g. 2000 to 8888).
+ * 
+ * THIRD :
+ * 		This part is divided into two :
+ * 
+ * 			1) At each step of the simulation, every neurons is updated, with an external input = to a 
+ * 				randomly generated poisson distribution if current-step is between the choosen interval, 
+ * 				or with external input = 0 (if outside the choosen interval).
+ * 
+ * 			2) At each step of the simulation, we check if each neurons has spiked. If Yes, we Send_spike to 
+ * 				every neurons it is connected to with the information wether it is an inhibiting or excititing spike.
+ * 
+ * */
+ 
 #endif

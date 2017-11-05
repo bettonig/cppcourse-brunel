@@ -22,32 +22,50 @@ TEST (NeuronTest, MembranePotential) {
 	neuron.Update_state(1.0, 0);
 	EXPECT_EQ(1.0 * c2 * (1 - Exp_), neuron.Get_membrane_potential());
 }
+/** This function tests if update_state works fine
+ * */
+ 
 
-
-TEST (NeuronTest, StoreSpikeExcit) {
+TEST (NeuronTest, StoreSpikeExcit_n_Buffer) {
 	Neuron neuron1;
 	
 	neuron1.Store_spike(20 , false);
 	EXPECT_EQ(neuron1.Get_buffer(3), 1);
 }
+/** This function tests both if store_spike and the buffer works (with an excitator input)
+ * */
 
 
-TEST (NeuronTest, StoreSpikeInhib) {
+TEST (NeuronTest, StoreSpikeInhib_n_Buffer) {
 	Neuron neuron2;
 	
 	neuron2.Store_spike(20, true);
 	EXPECT_EQ(neuron2.Get_buffer(3), -5);
 }
+/** This function tests if both store_spike and the buffer works (with an inhibitor input)
+ * */
 
 
-TEST (NeuronTest, SendSpikes) {
+TEST (NeuronTest, SendSpikesExcit) {
 	Neuron neuron3;
 	Neuron neuron4;
 	
 	neuron3.Send_spike(neuron4, 10, false);
 	EXPECT_EQ(neuron4.Get_buffer(9), 1);
-	
 }
+/** This function tests both if send_spike and the buffer works (with excitator input)
+ * */
+
+
+TEST (NeuronTest, SendSpikesInhib) {
+	Neuron neuron3;
+	Neuron neuron4;
+	
+	neuron3.Send_spike(neuron4, 10, true);
+	EXPECT_EQ(neuron4.Get_buffer(9), -5);
+}
+/** This function tests both if send_spike and the buffer works (with inhibitor input)
+ * */
 
 
 TEST (NeuronTest, UpdateState100) {
@@ -57,8 +75,10 @@ TEST (NeuronTest, UpdateState100) {
 		neuron5.Update_state(1.0, 0);
 	}
 	
-	EXPECT_EQ(neuron5.Has_now_spiked(), false);
+	EXPECT_EQ(neuron5.Get_nb_spks(), 0);
 }
+/** This test makes sure that with an external current of 1.0 pA, the neuron doesn't spike
+ * */
 
 
 TEST (NeuronTest, UpdateState101) {
@@ -70,7 +90,8 @@ TEST (NeuronTest, UpdateState101) {
 	
 	EXPECT_EQ(neuron6.Has_now_spiked(), true);
 }
-
+/** This test makes sure that with an external current of 1.01 pA, the neuron spikes at step 924
+ * */
 
 
 TEST (NeuronTest, IsRefractory) {
@@ -92,6 +113,8 @@ TEST (NeuronTest, IsRefractory) {
 		
 	EXPECT_EQ(neuron7.Is_refractory(), false);
 }
+/** This function makes sure that a neuron is refractory only for 20 steps after the spike
+ * */
 
 
 int main(int argc, char **argv) 

@@ -7,18 +7,17 @@ Neuron::Neuron ()
 :membrane_potential_(0.0), nb_spks_(0), time_spks_()
 {
 	time_spks_.push_back(0);
-	for (size_t i(0); i <= delay + 1; ++i) 
+	for (size_t i(0); i < (delay + 1); ++i) 
 	{
 		delay_buffer.push_back(0);
 	}
 }
 
-
 Neuron::Neuron (double membrane_potential, unsigned int nb_spks)
 :membrane_potential_(membrane_potential), nb_spks_(nb_spks), time_spks_()
 {
 	time_spks_.push_back(0);
-	for (size_t i(0); i <= delay + 1; ++i)
+	for (size_t i(0); i < (delay + 1); ++i)
 	{
 		delay_buffer.push_back(0);
 	}
@@ -28,15 +27,10 @@ Neuron::Neuron (double membrane_potential, unsigned int nb_spks)
 :
 {}*/
 
-
 Neuron::~Neuron ()
 {/*std::cout << "NEURON TERMINATED" << std::endl;*/}
 
-
-
 //----------------------------------------------------------------------
-
-
 
 // Getters::
 
@@ -52,12 +46,7 @@ int_vector Neuron::Get_time_spks () const
 int Neuron::Get_buffer(size_t place) const
 {return delay_buffer[place];}
 
-
-
 //----------------------------------------------------------------------
-
-
-
 
 //Setters::
 
@@ -70,14 +59,12 @@ void Neuron::Set_nb_spks (unsigned int nb_spks)
 void Neuron::Set_time_spks (int_vector time_spks)
 {time_spks_ = time_spks;}
 
-
-
+//----------------------------------------------------------------------
+//----------------------------------------------------------------------
 //----------------------------------------------------------------------
 
 
-
-
-///Methods::
+//Methods::
 
 bool Neuron::Is_refractory(/*double dT*/)
 {
@@ -116,7 +103,7 @@ void Neuron::Update_state(double Iext2, int poisson)
 	{
 		membrane_potential_ = 0.0;
 	} else {
-		membrane_potential_ = Exp_ * membrane_potential_ + Iext2 * c2 * (1 - Exp_) + ((delay_buffer[(steps_intern_ + delay) % (delay + 1)] + poisson) * J_) ;
+		membrane_potential_ = Exp_ * membrane_potential_ + Iext2 * c2 * (1 - Exp_) + ((delay_buffer[((steps_intern_ + 1) + delay) % (delay + 1)] + poisson) * J_) ;
 		delay_buffer[(steps_intern_ + delay) % (delay + 1)] = 0;
 		if (membrane_potential_ >= threshold_)
 		{
@@ -128,6 +115,7 @@ void Neuron::Update_state(double Iext2, int poisson)
 }
 /**Update_state : 	if the neuron is refractory, its membrane is zero.
  * 					otherwise, its new membrane potential will be calculated & its buffer at delay + step is set to 0
+ * 					If the neuron has spiked, that time it has spiked is registered & nb_spikes += 1
  * */
 
 
@@ -137,7 +125,7 @@ void Neuron::Send_spike(Neuron& neuron, int step, bool is_Inhib)
 	//std::cout<<"spike send"<<std::endl;
 }
 /** n1.Send_spike(n2, step, T/F) : n1 will call Store_spike of n2 and give as 
- *  arguments the time (step) n1 has spiked and wether it is excitatory or inhibitory
+ *  arguments the time (step) at which n1 has spiked and wether it is excitatory or inhibitory
  * */
 
 
@@ -145,7 +133,7 @@ void Neuron::Store_spike(int step, bool is_Inhib)
 {
 	int modulo = (step + delay) % (delay + 1);
 	if (is_Inhib) {
-		delay_buffer[modulo] -= 5;
+		delay_buffer[modulo] -= 6;
 		//std::cout<<"  inhib"<<std::endl;
 	} else {
 		delay_buffer[modulo] += 1;
