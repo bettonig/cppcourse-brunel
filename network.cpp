@@ -31,22 +31,22 @@ Network::Network ()
 ///Network ask method
 void Network::ask_display() {
 
-	while (start_step <= 0 or start_step >= stop_time) {											
-		std::cout << "Please inserteth the beginnig step (0 & <10000) :" << std::endl;			
+	do {											
+		std::cout << "Please insert the starting step ( > 0 & < 10000) at least 1 :" << std::endl;			
 		std::cin >> start_step;
 		if (std::cin.fail() or start_step >= stop_time) {
-			std::cout << "I'm sorry Dave, I'm afraid i can't do that......I think you know what the problem is!" << std::endl;
+			std::cout << "I'm sorry Dave, I'm afraid i can't do that...I think you know what the problem is!" << std::endl;
 			std::cin.clear();
 			std::cin.ignore(INT_MAX, '\n');
 		};
-	};
+	} while (start_step <= 0 or start_step >= stop_time);
 	
 	
 	while (stop_step <= 0 or stop_step < start_step or stop_step > stop_time) {						
-		std::cout << "Please inserteth the stopping step (>beginning step & <=10000) :" << std::endl;	
+		std::cout << "Please insert the stopping step (>beginning step & <=10000) :" << std::endl;	
 		std::cin >> stop_step;
 		if (std::cin.fail() or stop_step < start_step or stop_step > stop_time) {
-			std::cout << "I'm sorry Dave, I'm afraid i can't do that......I think you know what the problem is!" << std::endl;
+			std::cout << "I'm sorry Dave, I'm afraid i can't do that...I think you know what the problem is!" << std::endl;
 			std::cin.clear();
 			std::cin.ignore(INT_MAX, '\n');
 		};
@@ -54,10 +54,10 @@ void Network::ask_display() {
 		
 		
 	do {
-		std::cout << "Please inserteth the current :" << std::endl;
+		std::cout << "Please insert the external current (pA) :" << std::endl;
 		std::cin >> Iext;
 		if (std::cin.fail()) {
-			std::cout << "I'm sorry Dave, I'm afraid i can't do that......I think you know what the problem is!" << std::endl;
+			std::cout << "I'm sorry Dave, I'm afraid i can't do that...I think you know what the problem is!" << std::endl;
 			std::cin.clear();
 			std::cin.ignore(INT_MAX, '\n');
 		};
