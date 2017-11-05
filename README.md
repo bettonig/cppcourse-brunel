@@ -27,3 +27,5 @@ make doc (for doxyfile)
 
 3) Now you can run ./neuron_unittest to test the googletests, or 
 ./Neurons to run the simulation with 12'500 neurons.
+
+4) The Spikes-plots 1 & 2 correspond to brunels plots. The Spike-plot2 is the same as the first but with more neurons taken into account. This allows a better reading of the plots.

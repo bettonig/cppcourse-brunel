@@ -3,6 +3,6 @@ int main()
 {
 	Network network;
 	network.ask_display();
-	network.rum_rum();
+	network.run_rum();
 	return 0;
 }

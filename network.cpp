@@ -78,7 +78,7 @@ void Network::ask_display() {
 
 
 ///Network running method
-void Network::rum_rum() 
+void Network::run_rum() 
 {		
 	
 	int lambda(2);
@@ -87,15 +87,9 @@ void Network::rum_rum()
 	std::poisson_distribution<> poisson_distribution(lambda);
 	
 /** Here we generate a random poisson distribution to simulate 
- *  the external input of neurons outside of our simulation
+ *  the external input from neurons outside of our simulation
  * */
- 
-//----------------------------------------------------------------------
-
-	
-//	std::ofstream Neurons_mem_pot;
-//	Neurons_mem_pot.open("potentials.txt");
-	
+ 	
 	std::ofstream Spikes;
 	Spikes.open("Spikes_plot.txt");
 	
@@ -118,7 +112,7 @@ void Network::rum_rum()
 					{
 						is_Inhib = true;
 					}
-					neurons_[i].Send_spike(neurons_[neurons_targets[i][j]], (nb_step), is_Inhib);
+					neurons_[i].Send_spike(neurons_[neurons_targets[i][j]], nb_step, is_Inhib);
 				}
 				//if (nb_step > 5000 and nb_step < 7000) {
 					Spikes << nb_step << '\t' << i << std::endl;
@@ -132,13 +126,9 @@ void Network::rum_rum()
 			{
 				neurons_[i].Update_state(Iext2, poisson_distribution(generate));
 			}
-//			Neurons_mem_pot << neurons_[i].Get_membrane_potential() << '\t';
-			};
-//		Neurons_mem_pot << std::endl;
+		};
 		++nb_step;
 	};
-	
-//	Neurons_mem_pot.close();
 	Spikes.close();
 }
 
