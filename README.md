@@ -19,13 +19,12 @@ googletest
 
 cmake .
 
-(wait until it is finnished)
-
 make
 
 make doc (for doxyfile)
 
 3) Now you can run ./neuron_unittest to test the googletests, or 
-./Neurons to run the simulation with 12'500 neurons.
+./Neurons to run the simulation with 12'500 neurons (expected time : 48s). 
+I advise you to put '1' as starting step, '10000' as stopping step and '0' as external current.
 
 4) The Spikes-plots 1 & 2 correspond to brunels plots. The Spike-plot2 is the same as the first but with more neurons taken into account. This allows a better reading of the plots.
